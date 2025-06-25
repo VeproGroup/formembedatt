@@ -1,29 +1,119 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vepro Attendance</title>
-</head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vepro Attendance</title>
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    iframe {
+      border: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      max-width: 100%;
+    }
+
+    #redirectBtn {
+      display: none;
+    }
+
+    #loadingSpinner {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #007bff;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .notice {
+      margin-top: 12px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
 <body>
-    
-    <iframe id="gform"
-        src="https://docs.google.com/forms/d/e/1FAIpQLSes4UpG38PpWqZPnqQbQndaxuCXRLOYb-dh8hhdxHvrKm2uqQ/viewform?embedded=true" width="640" height="1891" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-<script>
-    document.getElementById('gform').onload = function () {
-        console.log("Form loaded");
+
+  <h1>Vepro Attendance Form</h1>
+
+  <iframe
+    id="gform"
+    src="https://docs.google.com/forms/d/e/1FAIpQLSes4UpG38PpWqZPnqQbQndaxuCXRLOYb-dh8hhdxHvrKm2uqQ/viewform?embedded=true"
+    width="640"
+    height="1891">
+    Loading…
+  </iframe>
+
+  <button id="redirectBtn" onclick="goToScript()">Redirect</button>
+
+  <div id="loadingSpinner">
+    <div class="spinner"></div>
+    <p class="notice">Redirecting you shortly...</p>
+  </div>
+
+  <script>
+    let loadCount = 0;
+
+    const iframe = document.getElementById('gform');
+    const button = document.getElementById('redirectBtn');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+
+    iframe.onload = function () {
+      loadCount++;
+      console.log("Form load count:", loadCount);
+
+      if (loadCount > 2) {
+        // Show loading spinner before auto-redirect
+        loadingSpinner.style.display = 'block';
+
+        // Slight delay before redirect
+        setTimeout(() => {
+          button.click();
+        }, 1500);
+      }
     };
 
     function goToScript() {
-        window.location.href = "https://script.google.com/macros/s/AKfycbxaIeNPA2OnJWkGmyab2Lt5nYNS_mVYlN4N8uEzLBRVe1vn5C_esOQ4mFrT3m40rmQu/exec";
+      window.location.href = "https://script.google.com/macros/s/AKfycbxaIeNPA2OnJWkGmyab2Lt5nYNS_mVYlN4N8uEzLBRVe1vn5C_esOQ4mFrT3m40rmQu/exec";
     }
-</script>
-<button onclick="goToScript()">Click here to finish</button>
+  </script>
 
 </body>
-
 </html>
